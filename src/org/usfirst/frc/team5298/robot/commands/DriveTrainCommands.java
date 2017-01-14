@@ -20,6 +20,7 @@ public class DriveTrainCommands extends Command {
 	    	double magnitude = Robot.oi.driverPad.getLeftY();
 	    	double direction = Robot.oi.driverPad.getRightY();
 	    	double rotation = Robot.oi.driverPad.getRightX();
+	    	Robot.drivetrain.Mecanum(magnitude, direction, rotation);
 	    	
 	    }
 
