@@ -1,5 +1,4 @@
 package org.usfirst.frc.team5298.robot;
-	
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -97,54 +96,6 @@ public class Gamepad extends Joystick {
 
     public DPadButton getDPadRight() {
         return new DPadButton(this, DPadButton.Direction.RIGHT);
-    }
-
-    /**
-     * The left bumper.
-     * @return if the left bumper is pressed
-     */
-    public boolean getRawLeftBumper() {
-        return getRawButton(5);
-    }
-
-    public JoystickButton getLeftBumper() {
-        return new JoystickButton(this, 5);
-    }
-
-    /**
-     * The right bumper.
-     * @return if the right bumper is pressed
-     */
-    public boolean getRawRightBumper() {
-        return getRawButton(6);
-    }
-
-    public JoystickButton getRightBumper() {
-        return new JoystickButton(this, 6);
-    }
-
-    /**
-     * The left trigger.
-     * @return if the left trigger is pressed
-     */
-    public boolean getRawLeftTrigger() {
-        return getRawButton(7);
-    }
-
-    public JoystickButton getLeftTrigger() {
-        return new JoystickButton(this, 7);
-    }
-
-    /**
-     * The right trigger.
-     * @return if the right trigger is pressed
-     */
-    public boolean getRawRightTrigger() {
-        return getRawButton(8);
-    }
-
-    public JoystickButton getRightTrigger() {
-        return new JoystickButton(this, 8);
     }
 
     /**
@@ -271,5 +222,4 @@ public class Gamepad extends Joystick {
             }
         }
     }
-
 }

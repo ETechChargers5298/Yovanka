@@ -1,8 +1,6 @@
 package org.usfirst.frc.team5298.robot.commands;
 
-import org.usfirst.frc.team5298.robot.OI;
 import org.usfirst.frc.team5298.robot.Robot;
-import org.usfirst.frc.team5298.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
