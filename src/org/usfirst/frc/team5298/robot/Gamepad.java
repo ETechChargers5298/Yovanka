@@ -18,7 +18,7 @@ public class Gamepad extends Joystick {
         super(port);
     }
 
-    /**
+	/**
      * The left analog stick x-axis.
      * @return value of left analog x-axis
      */

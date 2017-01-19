@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team5298.robot;
 
 import org.usfirst.frc.team5298.robot.commands.ExampleCommand;
@@ -6,6 +5,9 @@ import org.usfirst.frc.team5298.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team5298.robot.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -24,7 +26,8 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static Drivetrain drivetrain;
-	public static Gamepad driverpad;
+	public static Gamepad driverPad;
+	Timer timer;
 
 
     Command autonomousCommand;
@@ -37,11 +40,10 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		drivetrain = new Drivetrain();
-	    driverpad = new Gamepad(1);
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+	    driverPad = new Gamepad(1);
+	    timer = new Timer(); 
+	    
+	    
     }
 	
 	/**
@@ -69,13 +71,16 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         
+        timer.reset();
+        timer.start();
+        
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
 		case "My Auto":
 			autonomousCommand = new MyAutoCommand();
 			break;
 		case "Default Auto":
-		default:
+		default: 
 			autonomousCommand = new ExampleCommand();
 			break;
 		} */
@@ -89,6 +94,12 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        if(timer.get() < 5) {
+        	drivetrain.Mecanum(0.3, 90, 0);
+        }
+        
+    
     }
 
     public void teleopInit() {
@@ -96,14 +107,25 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+    	
+    	
+  
     }
+    	
+    
+    
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+        drivetrain.Mecanum(driverPad.getLeftY(), driverPad.getRightY(), driverPad.getRightX());
+        
+        
+        	
+        
     }
     
     /**

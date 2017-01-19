@@ -4,11 +4,11 @@ package org.usfirst.frc.team5298.robot.subsystems;
 
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team5298.robot.commands.DriveTrainCommands;
+import org.usfirst.frc.team5298.robot.Gamepad;
+import org.usfirst.frc.team5298.robot.OI;
 
-import org.usfirst.frc.team5298.robot.commands.MecanumDefaultCode;
-
-
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 /**
@@ -23,9 +23,10 @@ public class Drivetrain extends Subsystem {
 	private TalonSRX frontLeft;
 	private TalonSRX rearRight;
 	private TalonSRX rearLeft;
-	private RobotDrive drive;
+	public RobotDrive drive;
+	public Gamepad driverPad;
 
-	public Drivetrain() {
+	public void DriveTrain() {
 		frontRight = new TalonSRX(1);
 		frontLeft = new TalonSRX(2);
 		rearRight = new TalonSRX(3);
@@ -33,18 +34,16 @@ public class Drivetrain extends Subsystem {
 		drive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	}
 
-	public void Mecanum(double leftSpeed, double rightSpeed) {
-	drive.mecanumDrive_Cartesian(leftSpeed, rightSpeed, rightSpeed, rightSpeed); }
+	public void Mecanum(double magnitude, double direction, double rotation) {
+	drive.mecanumDrive_Polar(driverPad.getLeftY(), driverPad.getRightY(), driverPad.getRightX()); }
 		
 		 public void initDefaultCommand() {
 		        // Set the default command for a subsystem here.
-		        setDefaultCommand(new MecanumDefaultCode());
+			 setDefaultCommand(new DriveTrainCommands());
 	}
 		 
-		private void setDefaultCommand(MecanumDefaultCode mecanumDefaultCode) {
+		private void setDefaultCommand() {
 			// TODO Auto-generated method stub
-			
-		}
+			}
 	
 }
-
