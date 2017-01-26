@@ -1,12 +1,9 @@
 package org.usfirst.frc.team5298.robot;
 
-import org.usfirst.frc.team5298.robot.commands.ExampleCommand;
-import org.usfirst.frc.team5298.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team5298.robot.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -23,14 +20,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
-	public static Drivetrain drivetrain;
+	public static RobotDrive drivetrain;
 	public static Gamepad driverPad;
-	Timer timer;
+	Joystick left, right;
+	
 
 
-    Command autonomousCommand;
+   /* Command autonomousCommand;
     SendableChooser chooser;
 
     /**
@@ -39,9 +36,12 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		oi = new OI();
-		drivetrain = new Drivetrain();
-	    driverPad = new Gamepad(1);
-	    timer = new Timer(); 
+		drivetrain = new RobotDrive(1, 2, 3 ,4);
+	    driverPad = new Gamepad(0); 
+	    
+	    left = new Joystick(1);
+    	right = new Joystick(2);
+    	
 	    
 	    
     }
@@ -69,10 +69,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-        timer.reset();
-        timer.start();
+      //  autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
@@ -86,7 +83,7 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        //if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
@@ -95,20 +92,25 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         
-        if(timer.get() < 5) {
-        	drivetrain.Mecanum(0.3, 90, 0);
-        }
-        
     
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
+    	// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-    	
-    	
+
+    } 
+    
+    public void teleopPeriodic() {
+    Scheduler.getInstance().run(); 
+    
+    drivetrain.mecanumDrive_Cartesian(driverPad.getLeftX(), driverPad.getLeftY(), driverPad.getRightX()/2, 0);
+   
+    
+    
+   	
   
     }
     	
@@ -118,16 +120,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        
-        drivetrain.Mecanum(driverPad.getLeftY(), driverPad.getRightY(), driverPad.getRightX());
-        
-        
-        	
-        
-    }
-    
+  
     /**
      * This function is called periodically during test mode
      */

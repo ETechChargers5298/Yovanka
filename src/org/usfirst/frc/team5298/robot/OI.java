@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5298.robot;
 
 
-import org.usfirst.frc.team5298.robot.Gamepad;
+import org.usfirst.frc.team5298.robot.commands.DriveTrainCommands;
 
 
 
@@ -16,7 +16,10 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-     public Gamepad driverPad = new Gamepad(1);
+     public Gamepad driverPad;	 
+     public OI() {
+    	 driverPad = new Gamepad(0);
+    	 driverPad.getLeftButton().whenPressed(new DriveTrainCommands());
      
 	// Button button = new JoystickButton(stick, buttonNumber);
 	
@@ -40,4 +43,4 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-}
+} }
